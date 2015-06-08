@@ -81,10 +81,6 @@ public class SpiderUtil {
 		}
 		//转换字符串
 		String result = sb.toString();
-		result=result.replaceAll("&(amp;)","&");
-		result=result.replaceAll("\"  >","\">");
-		result=result.replaceAll(regEx_style,"");
-		
 		//result.replaceAll("&amp;", "&");
 		return result;
 		// return Tools.escape(line);
@@ -128,19 +124,19 @@ public class SpiderUtil {
 	 * @return
 	 */
 	public List<String> getLinks(String content) {
+		content=content.replaceAll("&(amp;)","&");
+		content=content.replaceAll("\"  >","\">");
+		content=content.replaceAll(regEx_style,"");
+		content=content.replaceAll("\n", "");
+		content=content.replaceAll("\t", "");
 		List<String> links = new ArrayList<String>();
+		 String regex2="(<a\\s+([^>h]|h(?!ref\\s))*href[\\s+]?=[\\s+]?('|\"))([^(\\s+|'|\")]*)([^>]*>)(.*?)</a>";
 		Pattern p = Pattern
-				.compile("(<a\\s+([^>h]|h(?!ref\\s))*href[\\s+]?=[\\s+]?('|\"))([^(\\s+|'|\")]*)([^>]*>)(.*?)</a>");
+				.compile(regex2);
 		if (Tools.isNotNull(content)) {
 			Matcher m = p.matcher(content);
 			while (m.find()) {
 				// TODO 判断链接是否为绝对地址
-				System.out.println(m.group(1));
-				System.out.println(m.group(2));
-				System.out.println(m.group(3));
-				System.out.println(m.group(4));
-				System.out.println(m.group(5));
-				System.out.println(m.group(6));
 				String url = m.group(4);
 				if (getIndex(url, web_host) == -1) {
 					url = web_host + url;

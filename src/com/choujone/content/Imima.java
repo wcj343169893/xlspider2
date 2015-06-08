@@ -39,6 +39,9 @@ public class Imima {
 		spider.setWeb_list_url("http://521xunlei.com/forum-xunleihuiyuan-1.html");
 		spider.setWeb_list_begin("<!-- main threadlist start -->");
 		spider.setWeb_list_end("<!-- main threadlist end -->");
+		spider.setWeb_content_begin("<div class=\"message\">");
+		spider.setWeb_content_end("<div id=\"post_new\"></div>");
+		spider.setWeb_content_title("<title>(.*)</title>");
 		st.setSpider(spider);
 		st.run();
 //		String testString="  <a href='forum.php?mod=viewthread&amp;tid=6562&amp;extra=page%3D1&amp;mobile=2'  >6月7日迅雷分享会员号发布（第一批）<span class='by'>管理-小猪</span>";
