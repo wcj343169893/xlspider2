@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns:persistence="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_1_0.xsd ">
+
+	<persistence-unit name="myJPA" transaction-type="RESOURCE_LOCAL">
+		<properties>
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.dialect" value="true" />
+			<property name="hibernate.connection.username">root</property>
+			<property name="hibernate.connection.url">
+				jdbc:mysql://localhost:3306/xunlei?characterEncoding=utf8
+			</property>
+			<property name="hibernate.dialect">
+				org.hibernate.dialect.MySQLDialect
+			</property>
+			
+			<property name="hibernate.connection.password"></property>
+			<property name="hibernate.connection.driver_class">
+				com.mysql.jdbc.Driver
+			</property>
+		</properties>
+	</persistence-unit>
+</persistence>
