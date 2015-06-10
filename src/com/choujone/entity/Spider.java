@@ -58,7 +58,7 @@ public class Spider implements Serializable {
 	// 是否显示
 	private int isVisible = 0;
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
