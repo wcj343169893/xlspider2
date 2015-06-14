@@ -33,6 +33,7 @@ public class Spider implements Serializable {
 	// 列表开始位置和结束位置
 	private String web_list_begin = "";
 	private String web_list_end = "";
+	private String web_list_contain = "";
 	// 内容标题
 	private String web_content_title = "";
 	// 内容开始位置和结束位置
@@ -215,4 +216,13 @@ public class Spider implements Serializable {
 		this.isVisible = isVisible;
 	}
 
+	public String getWeb_list_contain() {
+		return web_list_contain;
+	}
+
+	public void setWeb_list_contain(String web_list_contain) {
+		this.web_list_contain = web_list_contain;
+	}
+
+	
 }

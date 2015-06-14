@@ -22,6 +22,7 @@
 			<property name="hibernate.connection.driver_class">
 				com.mysql.jdbc.Driver
 			</property>
+			<property name="hibernate.jdbc.batch_size" value="20"/>
 		</properties>
 	</persistence-unit>
 </persistence>

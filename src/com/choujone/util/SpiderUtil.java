@@ -25,6 +25,7 @@ public class SpiderUtil {
 	public String listUrl = "";
 	public String web_list_begin = "";
 	public String web_list_end = "";
+	public String web_list_contain = "";
 	public List<String> contentUrls = new ArrayList<String>();
 	public String web_content_title = "";// 标题正则表达式
 	public String web_content_begin = "";// 内容开始位置
@@ -79,13 +80,15 @@ public class SpiderUtil {
 		} catch (IOException e) {
 			// ...
 		}
-		//转换字符串
+		// 转换字符串
 		String result = sb.toString();
-		//result.replaceAll("&amp;", "&");
+		// result.replaceAll("&amp;", "&");
 		return result;
 		// return Tools.escape(line);
 	}
+
 	private static final String regEx_style = "<span[^>]*?>[\\s\\S]*?<\\/span>";
+
 	/**
 	 * 根据首尾字符串，截取内容
 	 * 
@@ -124,15 +127,14 @@ public class SpiderUtil {
 	 * @return
 	 */
 	public List<String> getLinks(String content) {
-		content=content.replaceAll("&(amp;)","&");
-		content=content.replaceAll("\"  >","\">");
-		content=content.replaceAll(regEx_style,"");
-		content=content.replaceAll("\n", "");
-		content=content.replaceAll("\t", "");
+		content = content.replaceAll("&(amp;)", "&");
+		content = content.replaceAll("\"  >", "\">");
+		content = content.replaceAll(regEx_style, "");
+		content = content.replaceAll("\n", "");
+		content = content.replaceAll("\t", "");
 		List<String> links = new ArrayList<String>();
-		 String regex2="(<a\\s+([^>h]|h(?!ref\\s))*href[\\s+]?=[\\s+]?('|\"))([^(\\s+|'|\")]*)([^>]*>)(.*?)</a>";
-		Pattern p = Pattern
-				.compile(regex2);
+		String regex2 = "(<a\\s+([^>h]|h(?!ref\\s))*href[\\s+]?=[\\s+]?('|\"))([^(\\s+|'|\")]*)([^>]*>)(.*?)</a>";
+		Pattern p = Pattern.compile(regex2);
 		if (Tools.isNotNull(content)) {
 			Matcher m = p.matcher(content);
 			while (m.find()) {
@@ -141,7 +143,13 @@ public class SpiderUtil {
 				if (getIndex(url, web_host) == -1) {
 					url = web_host + url;
 				}
-				links.add(url);
+				if (!"".equals(web_list_contain)) {
+					if (getIndex(url,web_list_contain ) != -1) {
+						links.add(url);
+					}
+				} else {
+					links.add(url);
+				}
 			}
 		}
 		return links;
@@ -311,6 +319,7 @@ public class SpiderUtil {
 		this.setWeb_list_end(spider.getWeb_list_end());
 		// 得到列表之后，设置内容页的标题
 		this.setWeb_content_title(spider.getWeb_content_title());
+		this.setWeb_list_contain(spider.getWeb_list_contain());
 		// 设置标签清理 为空代表清理所有
 		this.setClear_title_reg(null);
 		// 设置内容开始结束位置
@@ -374,36 +383,30 @@ public class SpiderUtil {
 		// .getContent("http://www.xiaodiao.com/html/gndy/dyzz/20120210/36434.html"),
 		// "<div[^>]*>(.*)</div>"));
 		// 所有连起来测试一下
-		/*SpiderUtil spider = new SpiderUtil();
-		spider.setCharset("gbk");
-		spider.setWeb_host("http://www.xiaodiao.com");
-		// 设置list地址
-		spider.setListUrl("http://www.xiaodiao.com/html/gndy/dyzz/index.html");
-		// 设置list列表区域开始和结束
-		spider.setWeb_list_begin("<div class=\"co_content8\">");
-		spider.setWeb_list_end("align=\"center\" bgcolor=\"#F4FAE2\"");
-		// 得到列表之后，设置内容页的标题
-		spider.setWeb_content_title("<h1>(.*)</h1>");
-		// 设置标签清理 为空代表清理所有
-		spider.setClear_title_reg(null);
-		// 设置内容开始结束位置
-		spider.setWeb_content_begin("<div id=\"Zoom\">");
-		spider.setWeb_content_end("安装软件后,点击即可下载,谢谢大家支持，欢迎每天来");
-		// 清理内容标签
-		spider.setClear_content_reg(new String[] { "img", "p", "/p", "span","br",
-				"/span" });
-		// 得到内容页面
-		List<WebPage> webPages = spider.getWebPages();
-		for (WebPage webPage : webPages) {
-//			System.out.println("url:" + webPage.getUrl() + " \t title:"
-//					+ webPage.getTitle() + "\t content:"
-//					+ webPage.getContent().substring(0, 100));
-			System.out.println(webPage.getContent());
-		}*/
-		
-		SpiderUtil util=new SpiderUtil();
+		/*
+		 * SpiderUtil spider = new SpiderUtil(); spider.setCharset("gbk");
+		 * spider.setWeb_host("http://www.xiaodiao.com"); // 设置list地址
+		 * spider.setListUrl
+		 * ("http://www.xiaodiao.com/html/gndy/dyzz/index.html"); //
+		 * 设置list列表区域开始和结束
+		 * spider.setWeb_list_begin("<div class=\"co_content8\">");
+		 * spider.setWeb_list_end("align=\"center\" bgcolor=\"#F4FAE2\""); //
+		 * 得到列表之后，设置内容页的标题 spider.setWeb_content_title("<h1>(.*)</h1>"); //
+		 * 设置标签清理 为空代表清理所有 spider.setClear_title_reg(null); // 设置内容开始结束位置
+		 * spider.setWeb_content_begin("<div id=\"Zoom\">");
+		 * spider.setWeb_content_end("安装软件后,点击即可下载,谢谢大家支持，欢迎每天来"); // 清理内容标签
+		 * spider.setClear_content_reg(new String[] { "img", "p", "/p",
+		 * "span","br", "/span" }); // 得到内容页面 List<WebPage> webPages =
+		 * spider.getWebPages(); for (WebPage webPage : webPages) { //
+		 * System.out.println("url:" + webPage.getUrl() + " \t title:" // +
+		 * webPage.getTitle() + "\t content:" // +
+		 * webPage.getContent().substring(0, 100));
+		 * System.out.println(webPage.getContent()); }
+		 */
+
+		SpiderUtil util = new SpiderUtil();
 		String content = "";
-		List<String> link =util.getLinks(content);
+		List<String> link = util.getLinks(content);
 	}
 
 	public String getCharset() {
@@ -498,6 +501,14 @@ public class SpiderUtil {
 
 	public void setClear_content_reg(String[] clearContentReg) {
 		clear_content_reg = clearContentReg;
+	}
+
+	public String getWeb_list_contain() {
+		return web_list_contain;
+	}
+
+	public void setWeb_list_contain(String web_list_contain) {
+		this.web_list_contain = web_list_contain;
 	}
 
 }

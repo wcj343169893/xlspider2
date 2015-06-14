@@ -1,3 +1,4 @@
+var BASE="/xlspider/";
 function tlist() {
 	$.post("/blogType", {
 		"t" : $("#t").val(),
@@ -10,14 +11,15 @@ function tlist() {
 function showResult() {
 	$('#test_result').dialog('open');
 	$("#test_result .result_content").html(
-			"<div class='loading'><img src='/images/loading.gif'/></div>");
+			"<div class='loading'><img src='images/loading.gif'/></div>");
 }
 // 测试列表填写是否正确
 function test_list() {
-	$.get("/spider", {
+	$.get(BASE+"spider", {
 		"opera" : "testList",
 		"web_host" : getById("web_host"),
 		"web_charSet" : getById("web_charSet"),
+		"web_list_contain" : getById("web_list_contain"),
 		"web_list_url" : getById("web_list_url"),
 		"web_list_begin" : getById("web_list_begin"),
 		"web_list_end" : getById("web_list_end")
@@ -28,12 +30,13 @@ function test_list() {
 
 // 测试内容页是否填写正确
 function test_content() {
-	$.get("/spider", {
+	$.get(BASE+"spider", {
 		"opera" : "testContent",
 		"web_host" : getById("web_host"),
 		"web_charSet" : getById("web_charSet"),
 		"web_list_url" : getById("web_list_url"),
 		"web_list_begin" : getById("web_list_begin"),
+		"web_list_contain" : getById("web_list_contain"),
 		"web_list_end" : getById("web_list_end"),
 		"web_content_title" : getById("web_content_title"),
 		"web_content_begin" : getById("web_content_begin"),
@@ -50,13 +53,14 @@ function start_spider(id){
 function begin() {
 	$('#test_result').dialog('open');
 	$("#test_result .result_content").html(
-			"<div class='loading'><img src='/images/loading.gif'/></div>");
-	$.get("/spider", {
+			"<div class='loading'><img src='images/loading.gif'/></div>");
+	$.get(BASE+"spider", {
 		"opera" : "add",
 		"name" : getById("spider_name"),
 		"web_host" : getById("web_host"),
 		"web_charSet" : getById("web_charSet"),
 		"web_list_url" : getById("web_list_url"),
+		"web_list_contain" : getById("web_list_contain"),
 		"web_list_begin" : getById("web_list_begin"),
 		"web_list_end" : getById("web_list_end"),
 		"web_content_title" : getById("web_content_title"),
@@ -81,7 +85,7 @@ function getTag() {
 	return reg.substring(0, reg.length - 1);
 }
 $(function() {
-	tlist();
+	//tlist();
 	$(".tabs").tabs();
 	// Dialog
 	var name = $("#spider_name"), spider_start = $("#spider_start"), web_host = $("#web_host"), web_charSet = $("#web_charSet"), web_list_url = $("#web_list_url"), web_list_begin = $("#web_list_begin"), web_list_end = $("#web_list_end"),
@@ -150,7 +154,7 @@ $(function() {
 							bValid = bValid
 									&& checkRegexp(
 											web_list_url,
-											/(?:https|http|ftp|rtsp|mms):\/\/.+\/[\w]+\.[\w]+/,
+											/(?:https|http|ftp|rtsp|mms):\/\/.+\/[\w0-9_\-]+\.[\w]+/,
 											"网址格式错误");
 
 							bValid = bValid
@@ -199,7 +203,7 @@ $(function() {
 							/(?:https|http|ftp|rtsp|mms):\/\/[^\/]/, "网址格式错误");
 			bValid = bValid
 					&& checkRegexp(web_list_url,
-							/(?:https|http|ftp|rtsp|mms):\/\/.+\/[\w]+\.[\w]+/,
+							/(?:https|http|ftp|rtsp|mms):\/\/.+\/[\w0-9_\-]+\.[\w]+/,
 							"网址格式错误");
 			if (bValid) {
 				showResult();
@@ -236,7 +240,7 @@ $(function() {
 	$(".start_spider").each(function(){	
 		$(this).click(function() {
 			showResult();
-		$.get("/spider", {
+		$.get(BASE+"spider", {
 				"opera" : "start","id":$(this).attr("name")},function(data){
 					$("#test_result .result_content").html(data);
 				});

@@ -34,10 +34,12 @@ public class SpiderDao extends SDao {
 		Date dt = new Date(System.currentTimeMillis());
 		if (operation.equals(Operation.add)) {// 新增
 			try {
+				manager.getTransaction().begin();//-->开始事务
 				// spider.setId(dt.getTime());
 				spider.setSdTime(dt);// 创建时间
 				spider.setEdTime(dt);// 修改时间
 				manager.persist(spider);// new person 是新建状态
+				manager.getTransaction().commit();
 				flag = true;
 			} catch (Exception e) {
 				flag = false;
@@ -94,10 +96,11 @@ public class SpiderDao extends SDao {
 		List<Spider> spiders = new ArrayList<Spider>();
 		this.init();
 		try {
-			Query query = manager.createQuery("select * from spider");
+			Query query = manager.createQuery("SELECT sp FROM Spider sp");
 			// query.setParameter(1, 1);
-			spiders = (List<Spider>) query.getSingleResult();// 单结果查询 必须有结果
+			spiders = (List<Spider>) query.getResultList();// 单结果查询 必须有结果
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return spiders;
 	}
@@ -110,10 +113,13 @@ public class SpiderDao extends SDao {
 	 */
 	public Spider getSpiderById(int id) {
 		Spider spider = null;
+		this.init();
 		try {
 			spider = manager.find(Spider.class, id);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		return spider;
 	}
 

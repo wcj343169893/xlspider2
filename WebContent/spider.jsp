@@ -7,11 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>采集内容</title>
-<script type="text/javascript" charset="utf-8" src="/js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui.css" />
-	<link rel="stylesheet" type="text/css" href="/jscal/css/jscal2.css" />
-    <link rel="stylesheet" type="text/css" href="/jscal/css/border-radius.css" />
-    <link rel="stylesheet" type="text/css" href="/jscal/css/steel/steel.css" />
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/admin-style.css" />
+    <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="jscal/css/jscal2.css" />
+    <link rel="stylesheet" type="text/css" href="jscal/css/border-radius.css" />
+    <link rel="stylesheet" type="text/css" href="jscal/css/steel/steel.css" />
 </head>
 <body>
 <%
@@ -20,11 +22,30 @@
 	List<Spider> spiders=sd.getSpiderByPages();
 %>
 <div class="main">
-<%-- 	<jsp:include page="/admin/menu.jsp"></jsp:include>	 --%>
-	<script type="text/javascript" charset="utf-8" src="/js/jquery-ui.js"></script>
- 	<script src="/jscal/js/jscal2.js"></script>
-    <script src="/js/spider.js"></script>
-    <script src="/jscal/js/lang/en.js"></script>
+<div class="top">
+	<div class="bord"> 
+		<a title="后台管理" href="/admin/">控制面板</a>
+		<a href="/user">[注销]</a>
+	</div>
+	 <div class="headings">
+      	<h1><a href="/" > </a></h1>
+      	<h2> </h2>
+      	<div class="clear">
+      	</div>
+    </div>
+	<div class="menu">
+		<ul>
+			<li>
+				<a href="spider.jsp">采集任务</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+	<script type="text/javascript" charset="utf-8" src="js/jquery-ui.js"></script>
+ 	<script src="jscal/js/jscal2.js"></script>
+    <script src="js/spider.js"></script>
+    <script src="jscal/js/lang/en.js"></script>
 	<div class="address">
 			采集中心(<a href="javascript:void(0)" id="newSpider" class="spider_btn ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>新建任务</a>)
 	</div>
@@ -82,26 +103,29 @@
 		    </ul>
 		<div id="web_list">
 			<div class="">
-				<div class="container-title-header">网址：</div><input type="text" name="web_host" id="web_host" value="http://www.dy2018.com/" size="50"> 
+				<div class="container-title-header">网址：</div><input type="text" name="web_host" id="web_host" value="http://521xunlei.com/" size="50"> 
 			</div>
 			<div>
 			<div class="container-title-header">网站编码：</div>
 				<select name="web_charSet" id="web_charSet">
-					<option value="utf-8">utf-8</option>
+					<option value="utf-8" selected="selected">utf-8</option>
 					<option value="gbk">gbk</option>
-					<option value="gb2312" selected="selected">gb2312</option>
+					<option value="gb2312" >gb2312</option>
 					<option value="ISO8859-1">ISO8859-1</option>
 				</select>
 			
 			</div>
 			<div>
-				<div class="container-title-header">列表页地址：</div><input type="text"	name="web_list_url" id="web_list_url" size="50" value="http://www.dy2018.com/html/gndy/dyzz/index.html"> 
+				<div class="container-title-header">包含字符串：</div><input type="text"	name="web_list_contain" id="web_list_contain" size="50" value="viewthread">
 			</div>
 			<div>
-				<div class="container-title-header">列表页开始位置：</div><textarea rows="5" cols="50" name="web_list_begin" id="web_list_begin"><div class="co_content8"></textarea>
+				<div class="container-title-header">列表页地址：</div><input type="text"	name="web_list_url" id="web_list_url" size="50" value="http://521xunlei.com/forum-xunleihuiyuan-1.html"> 
 			</div>
 			<div>
-				<div class="container-title-header">列表页结束位置：</div><textarea rows="5" cols="50" name="web_list_end" id="web_list_end">align="center" bgcolor="#F4FAE2"</textarea>
+				<div class="container-title-header">列表页开始位置：</div><textarea rows="5" cols="50" name="web_list_begin" id="web_list_begin"><!-- main threadlist start --></textarea>
+			</div>
+			<div>
+				<div class="container-title-header">列表页结束位置：</div><textarea rows="5" cols="50" name="web_list_end" id="web_list_end"><!-- main threadlist end --></textarea>
 			</div>
 			<div>
 				<a href="javascript:void(0)" class="spider_btn ui-state-default ui-corner-all" id="test_list_btn"><span class="ui-icon ui-icon-newwin"></span>测试列表页</a>
@@ -109,7 +133,7 @@
 		</div>
 		<div id="web_content">
 			<div>
-				<div class="container-title-header">内容标题：</div><input type="text" name="web_content_title" id="web_content_title" value="<h1>(.*)</h1>">(正则) 
+				<div class="container-title-header">内容标题：</div><input type="text" name="web_content_title" id="web_content_title" value="<title>(.*)</title>">(正则) 
 			</div>
 			<div>
 				<div class="container-title-header">保留标签：</div>
@@ -120,10 +144,10 @@
 				<input type="checkbox" value="div,/div" id="tag_div" class="web_content_tags"><label for="tag_div">DIV</label>
 			</div>
 			<div>
-				<div class="container-title-header">内容开始位置：</div><textarea rows="5" cols="50" name="web_content_begin" id="web_content_begin"><div id="Zoom"></textarea>
+				<div class="container-title-header">内容开始位置：</div><textarea rows="5" cols="50" name="web_content_begin" id="web_content_begin"><div class="message"</textarea>
 			</div>
 			<div>
-				<div class="container-title-header">内容结束位置：</div><textarea rows="5" cols="50" name="web_content_end" id="web_content_end">安装软件后,点击即可下载,谢谢大家支持，欢迎每天来</textarea>
+				<div class="container-title-header">内容结束位置：</div><textarea rows="5" cols="50" name="web_content_end" id="web_content_end"><div id="post_new"></div></textarea>
 			</div>
 			<div>
 				<a href="javascript:void(0)" class="spider_btn ui-state-default ui-corner-all" id="test_content_btn"><span class="ui-icon ui-icon-newwin"></span>测试内容页</a>
@@ -132,13 +156,15 @@
 		</div>
 	</div>
 	<div id="test_result" title="运行结果">
-		<div class="result_content"><div class='loading'><img src='/images/loading.gif'/></div></div>
+		<div class="result_content"><div class='loading'><img src='images/loading.gif'/></div></div>
 	</div>
 	
 	<script type="text/javascript">
 		
 	</script>
-<%-- 	<jsp:include page="/admin/bottom.jsp"></jsp:include> --%>
+<div class="footer">
+	<div class="content">Powered By choujone 版权所有.Some Rights Reserved </div>
+</div>
 </div>
 </body>
 </html>
