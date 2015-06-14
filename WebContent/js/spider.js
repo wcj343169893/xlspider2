@@ -54,7 +54,7 @@ function begin() {
 	$('#test_result').dialog('open');
 	$("#test_result .result_content").html(
 			"<div class='loading'><img src='images/loading.gif'/></div>");
-	$.get(BASE+"spider", {
+	$.post(BASE+"spider", {
 		"opera" : "add",
 		"name" : getById("spider_name"),
 		"web_host" : getById("web_host"),
@@ -71,6 +71,7 @@ function begin() {
 		"clear_content_reg" : getTag()
 	}, function(data) {
 		$("#test_result .result_content").html(data);
+		window.location.reload();
 	});
 }
 // 根据name属性，取值

@@ -30,6 +30,7 @@ public class SpiderUtil {
 	public String web_content_title = "";// 标题正则表达式
 	public String web_content_begin = "";// 内容开始位置
 	public String web_content_end = "";// 内容结束位置
+	private Spider spider;
 
 	public String[] clear_title_reg;// 标题清理标签
 	public String[] clear_content_reg;// 内容清理标签
@@ -67,6 +68,11 @@ public class SpiderUtil {
 		try {
 			URL url = new URL(link);
 			URLConnection conn = url.openConnection();
+			if(this.spider.getName().indexOf("网页版") != -1){
+				conn.addRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+				conn.addRequestProperty("Cookie", "3e6X_0cbc_saltkey=bg6W9NJV; 3e6X_0cbc_lastvisit=1434105647; 3e6X_0cbc_visitedfid=2; pgv_pvi=8841083904; JXM700538=1; JXD700538=1; pgv_si=s5501513728; 3e6X_0cbc_st_t=0%7C1434295441%7C83024a7836836465f5de6b2797391517; 3e6X_0cbc_forum_lastvisit=D_2_1434295441; 3e6X_0cbc_sendmail=1; 3e6X_0cbc_lastact=1434295919%09forum.php%09viewthread; 3e6X_0cbc_st_p=0%7C1434295919%7C7a81c4a8ff863799b85efdcaf126dcef; 3e6X_0cbc_viewid=tid_6552; 3e6X_0cbc_tou_not_allow=07c0fMOR0xplY07wlG972OuxvryHmvvlqvqT93DIcspZ%2BGGLOsJO7hdSg8sr3sdTpBWFG01jVs5OSzY1S%2B53o9%2FEW7hzQ%2FcchS7aRg; 3e6X_0cbc_sid=PMzd44; 3e6X_0cbc_check_key=; 3e6X_0cbc_check_address=; CNZZDATA5327901=cnzz_eid%3D161783908-1434107444-%26ntime%3D1434291127");
+				conn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
+			}
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					conn.getInputStream(), charset));
 			while ((line = reader.readLine()) != null) {
@@ -83,6 +89,9 @@ public class SpiderUtil {
 		// 转换字符串
 		String result = sb.toString();
 		// result.replaceAll("&amp;", "&");
+		result = result.replaceAll("手机版 - Powered by Discuz!", "");
+		result = result.replaceAll("爱密码网", "");
+		result = result.replaceAll("爱密码", "");
 		return result;
 		// return Tools.escape(line);
 	}
@@ -132,6 +141,8 @@ public class SpiderUtil {
 		content = content.replaceAll(regEx_style, "");
 		content = content.replaceAll("\n", "");
 		content = content.replaceAll("\t", "");
+		content = content.replaceAll("爱密码", "");
+		
 		List<String> links = new ArrayList<String>();
 		String regex2 = "(<a\\s+([^>h]|h(?!ref\\s))*href[\\s+]?=[\\s+]?('|\"))([^(\\s+|'|\")]*)([^>]*>)(.*?)</a>";
 		Pattern p = Pattern.compile(regex2);
@@ -327,6 +338,7 @@ public class SpiderUtil {
 		this.setWeb_content_end(spider.getWeb_content_end());
 		// 清理内容标签
 		this.setClear_content_reg(spider.getClear_content_reg().split(","));
+		this.spider=spider;
 		return getWebPages();
 	}
 

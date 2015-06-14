@@ -7,22 +7,14 @@
 	<persistence-unit name="myJPA" transaction-type="RESOURCE_LOCAL">
 		<properties>
 
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.dialect" value="true" />
-			<property name="hibernate.connection.username">root</property>
-			<property name="hibernate.connection.url">
-				jdbc:mysql://localhost:3306/xunlei?characterEncoding=utf8
-			</property>
-			<property name="hibernate.dialect">
-				org.hibernate.dialect.MySQLDialect
-			</property>
-			
-			<property name="hibernate.connection.password"></property>
-			<property name="hibernate.connection.driver_class">
-				com.mysql.jdbc.Driver
-			</property>
-			<property name="hibernate.jdbc.batch_size" value="20"/>
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+		      <property name="hibernate.connection.driver_class" value="org.gjt.mm.mysql.Driver"/>
+		      <property name="hibernate.connection.username" value="root"/>
+		      <property name="hibernate.connection.password" value=""/>
+		      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/xunlei?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		      <property name="hibernate.max_fetch_depth" value="3"/>
+		      <property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>
 	</persistence-unit>
 </persistence>

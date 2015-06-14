@@ -75,6 +75,8 @@ public class SpiderDao extends SDao {
 				b.setWeb_list_begin(spider.getWeb_list_begin());
 				b.setWeb_list_end(spider.getWeb_list_end());
 				b.setWeb_list_url(spider.getWeb_list_url());
+				b.setWeb_list_contain(spider.getWeb_list_contain());
+				manager.merge(b);
 				flag = true;
 			} catch (Exception e) {
 				flag = false;

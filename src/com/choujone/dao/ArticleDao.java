@@ -53,11 +53,12 @@ public class ArticleDao extends SDao {
 		if (operation.equals(Operation.add)) {// 新增
 			try {
 				manager.getTransaction().begin();// -->开始事务
+				int index=1;
 				for (Article article : articleList) {
 					long id = System.currentTimeMillis();
-					Random random = new Random(id);
-					article.setoId(id + "" + random.nextInt());
+					article.setoId(id +""+index);
 					System.out.println(article.getoId());
+					article.setArticleContent(article.getArticleContent().replaceAll("www.521xunlei.com", "www.choujone.com"));
 					article.setArticleCommentCount(0);
 					article.setArticleCommentable('0');
 					article.setArticleHadBeenPublished('1');
@@ -68,6 +69,7 @@ public class ArticleDao extends SDao {
 					article.setArticleCreateDate(dt);// 创建时间
 					article.setArticleUpdateDate(dt);// 修改时间
 					manager.persist(article);// new person 是新建状态
+					index++;
 				}
 				// manager.flush();
 				// manager.clear();

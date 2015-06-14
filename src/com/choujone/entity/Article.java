@@ -3,10 +3,13 @@ package com.choujone.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,17 +19,21 @@ import javax.persistence.TemporalType;
 public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
 	private String oId = "";
 
 	private String articleTitle = " ";
+	@Lob
+	@Basic(fetch=FetchType.LAZY)  
 	private String articleAbstract = " ";
 	private String articleTypeId = "0";
+	@Lob
+	@Basic(fetch=FetchType.LAZY)  
 	private String articleTags = " ";
 	private String articleAuthorEmail = "343169893@qq.com";
 	private int articleCommentCount = 0;
 	private int articleViewCount = 0;
+	@Lob
+	@Basic(fetch=FetchType.LAZY)  
 	private String articleContent = "";
 	private String articlePermalink = "";
 	private char articleHadBeenPublished = 1;
@@ -213,14 +220,6 @@ public class Article implements Serializable {
 
 	public void setSource(String source) {
 		this.source = source;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 }

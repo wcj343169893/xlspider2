@@ -25,6 +25,7 @@ public class SpiderServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		// TODO 采集测试
 		String id = req.getParameter("id") != null ? req.getParameter("id")
 				: "-1L";
@@ -188,5 +189,6 @@ public class SpiderServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		this.doGet(req, resp);
 	}
 }
