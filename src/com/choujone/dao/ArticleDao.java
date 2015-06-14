@@ -17,7 +17,7 @@ public class ArticleDao extends SDao {
 		this.init();
 		List<Article> articleList = new ArrayList<Article>();
 		Query query = manager
-				.createQuery("select arti from Article arti order by oId desc");
+				.createQuery("select arti from Article arti where arti.source is not null order by oId desc");
 		// query.setParameter(1, 1);
 		// List list=query.getResultList();
 		articleList = (List<Article>) query.getResultList();// 单结果查询 必须有结果
@@ -59,6 +59,7 @@ public class ArticleDao extends SDao {
 					article.setoId(id +""+index);
 					System.out.println(article.getoId());
 					article.setArticleContent(article.getArticleContent().replaceAll("www.521xunlei.com", "www.choujone.com"));
+					article.setArticleAbstract(article.getArticleContent().substring(0, 200));
 					article.setArticleCommentCount(0);
 					article.setArticleCommentable('0');
 					article.setArticleHadBeenPublished('1');
