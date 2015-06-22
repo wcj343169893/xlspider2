@@ -15,8 +15,9 @@ function showResult() {
 }
 // 测试列表填写是否正确
 function test_list() {
-	$.get(BASE+"spider", {
+	$.post(BASE+"spider", {
 		"opera" : "testList",
+		"name" : getById("spider_name"),
 		"web_host" : getById("web_host"),
 		"web_charSet" : getById("web_charSet"),
 		"web_list_contain" : getById("web_list_contain"),
@@ -30,8 +31,9 @@ function test_list() {
 
 // 测试内容页是否填写正确
 function test_content() {
-	$.get(BASE+"spider", {
+	$.post(BASE+"spider", {
 		"opera" : "testContent",
+		"name" : getById("spider_name"),
 		"web_host" : getById("web_host"),
 		"web_charSet" : getById("web_charSet"),
 		"web_list_url" : getById("web_list_url"),

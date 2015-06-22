@@ -309,6 +309,9 @@ public class SpiderUtil {
 			content = getContentByReg(content, web_content_begin,
 					web_content_end);
 			// TODO 清理内容中的标签
+//			if(this.spider.getName().indexOf("爱密码迅雷账号") !=-1){
+//				content=HtmlUtil.delHTMLTag(content);
+//			}
 			content = clear(content, getClear_content_reg());
 			webPage.setContent(content);
 			webPage.setDate(new Date());
@@ -521,6 +524,14 @@ public class SpiderUtil {
 
 	public void setWeb_list_contain(String web_list_contain) {
 		this.web_list_contain = web_list_contain;
+	}
+
+	public Spider getSpider() {
+		return spider;
+	}
+
+	public void setSpider(Spider spider) {
+		this.spider = spider;
 	}
 
 }

@@ -86,6 +86,9 @@ public class SpiderServlet extends HttpServlet {
 		// 设置list列表区域开始和结束
 		spiderUtil.setWeb_list_begin(web_list_begin);
 		spiderUtil.setWeb_list_end(web_list_end);
+		Spider sp2 = new Spider();
+		sp2.setName(name); 
+		spiderUtil.setSpider(sp2);
 		if (operation.equals(Operation.testList.toString())) {// 测试列表
 			// 得到列表地址
 			List<String> urls = spiderUtil.getContentUrls();
@@ -162,7 +165,7 @@ public class SpiderServlet extends HttpServlet {
 					article = new Article();
 					article.setArticleTitle(wp.getTitle());
 					article.setArticleTypeId(spider.getTids());
-					article.setArticleContent(wp.getContent());
+					article.setArticleContent(wp.getContent().trim());
 					article.setArticleCreateDate(new Date());
 					article.setSource(wp.getUrl());
 					
